@@ -112,3 +112,6 @@ ipython_config.py
 
 # pytype
 .pytype/
+
+#.env
+.env
