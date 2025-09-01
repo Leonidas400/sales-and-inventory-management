@@ -117,7 +117,7 @@ class Purchase(models.Model):
 
     slug = AutoSlugField(unique=True, populate_from="vendor")
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    description = models.TextField(max_length=300, blank=True, null=True)
+    description = models.TextField(max_length=300, blank=True)
     vendor = models.ForeignKey(
         Vendor, related_name="purchases", on_delete=models.CASCADE
     )

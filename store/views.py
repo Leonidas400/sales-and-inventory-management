@@ -91,6 +91,8 @@ def dashboard(request):
     }
     return render(request, "store/dashboard.html", context)
 
+PRODUCTS_URL = "/products"
+DELIVERIES_URL = "/deliveries"
 
 class ProductListView(LoginRequiredMixin, ExportMixin, tables.SingleTableView):
     """
@@ -166,7 +168,8 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Item
     template_name = "store/productcreate.html"
     form_class = ItemForm
-    success_url = "/products"
+    success_url = PRODUCTS_URL
+
 
     def test_func(self):
         # item = Item.objects.get(id=pk)
@@ -174,7 +177,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
             return False
         else:
             return True
-
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """
@@ -190,7 +192,8 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Item
     template_name = "store/productupdate.html"
     form_class = ItemForm
-    success_url = "/products"
+    success_url = PRODUCTS_URL
+
 
     def test_func(self):
         if self.request.user.is_superuser:
@@ -211,7 +214,8 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     model = Item
     template_name = "store/productdelete.html"
-    success_url = "/products"
+    success_url =  PRODUCTS_URL
+
 
     def test_func(self):
         if self.request.user.is_superuser:
@@ -291,7 +295,7 @@ class DeliveryCreateView(LoginRequiredMixin, CreateView):
     model = Delivery
     form_class = DeliveryForm
     template_name = "store/delivery_form.html"
-    success_url = "/deliveries"
+    success_url = DELIVERIES_URL 
 
 
 class DeliveryUpdateView(LoginRequiredMixin, UpdateView):
@@ -308,7 +312,7 @@ class DeliveryUpdateView(LoginRequiredMixin, UpdateView):
     model = Delivery
     form_class = DeliveryForm
     template_name = "store/delivery_form.html"
-    success_url = "/deliveries"
+    success_url = DELIVERIES_URL
 
 
 class DeliveryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -323,7 +327,7 @@ class DeliveryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     model = Delivery
     template_name = "store/productdelete.html"
-    success_url = "/deliveries"
+    success_url = DELIVERIES_URL 
 
     def test_func(self):
         if self.request.user.is_superuser:

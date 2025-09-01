@@ -5,8 +5,7 @@ function $(selector) {
 }
 
 function find(el, selector) {
-  let finded
-  return (finded = el.querySelector(selector)) ? finded : null
+  return el.querySelector(selector)
 }
 
 function siblings(el) {
