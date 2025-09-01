@@ -1,3 +1,7 @@
+from django.shortcuts import render
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_http_methods
+
 # Standard library imports
 import json
 import logging
@@ -201,6 +205,7 @@ def create_sale_and_details(data):
 
     return new_sale
 
+@require_http_methods(["GET", "POST"])
 def sale_create_view(request):
     context = {
         "active_icon": "sales",
