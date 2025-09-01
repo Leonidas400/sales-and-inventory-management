@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-
+@require_http_methods(["GET"])
 def export_sales_to_excel():
     # Create a workbook and select the active worksheet.
     workbook = Workbook()
@@ -83,7 +83,7 @@ def export_sales_to_excel():
 
     return response
 
-
+@require_http_methods(["GET"])
 def export_purchases_to_excel():
     # Create a workbook and select the active worksheet.
     workbook = Workbook()
