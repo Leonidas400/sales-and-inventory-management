@@ -28,13 +28,11 @@ class Bill(models.Model):
     address = models.CharField(
         max_length=255,
         blank=True,
-        null=True,
         help_text='Address of the institution'
     )
     description = models.CharField(
         max_length=255,
         blank=True,
-        null=True,
         help_text='Description of the bill'
     )
     payment_details = models.CharField(

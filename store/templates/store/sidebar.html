@@ -61,7 +61,7 @@
     <!-- Sidebar Header -->
     <div class="sidebar-header d-flex align-items-center px-3 py-4 border-bottom border-secondary">
         <a href="{% url 'user-profile' %}" class="d-flex align-items-center text-decoration-none text-light">
-            <img class="rounded-circle img-fluid" id="sidebar-img" width="45" src="{{ request.user.profile.profile_picture.url }}" alt="Profile Picture" />
+            <img class="rounded-circle img-fluid" id="sidebar-img" width="45" src="{{ request.user.profile.profile_picture.url }}" alt="Profile" />
             <div class="ms-3">
                 <h5 class="fs-6 mb-0">
                     {{ request.user.username }}{% if request.user.profile.role == 'AD' %} <i class="fa-solid fa-circle-check text-success"></i>{% endif %}
@@ -89,8 +89,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2 dropdown">
-                <a class="nav-link text-light {% if request.resolver_match.url_name == 'productslist' %}active{% endif %} dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-folder me-2"></i> Products
+                <button class="nav-link text-light {% if request.resolver_match.url_name == 'productslist' %}active{% endif %} dropdown-toggle" id="productsDropdown" data-bs-toggle="dropdown" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();}"></button>
                 </a>
                 <ul class="dropdown-menu bg-dark border-0" aria-labelledby="productsDropdown">
                     <li><a class="dropdown-item text-light {% if request.resolver_match.url_name == 'productslist' %}active{% endif %}" href="{% url 'productslist' %}">All Products</a></li>
@@ -123,7 +122,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2 dropdown">
-                <a class="nav-link text-light {% if request.resolver_match.url_name == 'profile_list' or request.resolver_match.url_name == 'customer_list' or request.resolver_match.url_name == 'vendor-list' %} active{% endif %} dropdown-toggle" href="#" id="accountsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="nav-link text-light {% if request.resolver_match.url_name == 'profile_list' or request.resolver_match.url_name == 'customer_list' or request.resolver_match.url_name == 'vendor-list' %}active{% endif %} dropdown-toggle" id="accountsDropdown" data-bs-toggle="dropdown" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();}"><i class="fa fa-users me-2"></i> Accounts</button>
                     <i class="fa fa-users me-2"></i> Accounts
                 </a>
                 <ul class="dropdown-menu bg-dark border-0" aria-labelledby="accountsDropdown">
@@ -149,8 +148,4 @@
 <!-- Bootstrap Bundle with Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Explicitly initializing Bootstrap dropdowns if needed
-    document.querySelectorAll('.dropdown-toggle').forEach(function(element) {
-        new bootstrap.Dropdown(element);
-    });
 </script>

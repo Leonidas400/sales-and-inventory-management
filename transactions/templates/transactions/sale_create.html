@@ -189,7 +189,7 @@
             // Calculate the sale
             this.calculate_sale();
 
-            tblItems = $("#table_items").DataTable({
+            let tblItems = $("#table_items").DataTable({
                 destroy: true,
                 data: this.products.items,
                 columns: [
@@ -321,7 +321,7 @@
         $('#table_items tbody').on('click', 'a[rel="delete"]', function () {
             // When an item is deleted
             var tr = tblItems.cell($(this).closest('td, li')).index();
-            item_name = (tblItems.row(tr.row).data().name);
+            let item_name = (tblItems.row(tr.row).data().name);
 
             Swal.fire({
                 customClass: {
@@ -406,18 +406,7 @@
                     </div>
                 </div>
             `);
-        }
-
-        // Helper functions
-        function getAjax(type, url, data, successCallback, errorCallback) {
-            $.ajax({
-                type: type,
-                url: url,
-                data: data,
-                success: successCallback,
-                error: errorCallback
-            });
-        }
+        }    
 
         // Function to round numbers
         function roundTo(value, decimals) {
