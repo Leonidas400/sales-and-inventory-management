@@ -150,6 +150,7 @@ a {
   color: #eee;
   line-height: 55px;
   padding: 0 10px;
+  float: left;
 }
 
 .navbar .navbar-brand {
@@ -197,10 +198,6 @@ a {
   .navbar .navbar-form {
     border: none;
   }
-}
-
-.navbar .navbar-nav > li > a {
-  float: left;
 }
 
 .navbar .navbar-nav > li > a > span:not(.caret) {
