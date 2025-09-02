@@ -5,7 +5,7 @@ from autoslug import AutoSlugField
 class Bill(models.Model):
     """Model representing a bill with various details and payment status."""
 
-    slug = AutoSlugField(unique=True, populate_from='date')
+    slug = AutoSlugField(unique=True, populate_from='institution_name')
     date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Date (e.g., 2022/11/22)'
