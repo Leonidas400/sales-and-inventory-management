@@ -62,7 +62,6 @@ class Profile(models.Model):
         choices=ROLE_CHOICES,
         max_length=12,
         blank=True,
-        null=True,
         verbose_name='Role'
     )
 
@@ -104,7 +103,7 @@ class Vendor(models.Model):
         blank=True, null=True, verbose_name='Phone Number'
     )
     address = models.CharField(
-        max_length=50, blank=True, null=True, verbose_name='Address'
+        max_length=50, blank=True, verbose_name='Address'
     )
 
     def __str__(self):
@@ -121,10 +120,10 @@ class Vendor(models.Model):
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=256)
-    last_name = models.CharField(max_length=256, blank=True, null=True)
-    address = models.TextField(max_length=256, blank=True, null=True)
+    last_name = models.CharField(max_length=256, blank=True)
+    address = models.TextField(max_length=256, blank=True)
     email = models.EmailField(max_length=256, blank=True, null=True)
-    phone = models.CharField(max_length=30, blank=True, null=True)
+    phone = models.CharField(max_length=30, blank=True)
     loyalty_points = models.IntegerField(default=0)
 
     class Meta:
