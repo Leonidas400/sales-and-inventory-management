@@ -25,6 +25,8 @@ jobs:
         pip install coverage # Instala a biblioteca para o relatório de cobertura.
         
     - name: Executar Testes do Django com Cobertura
+      env:
+        DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       run: coverage run manage.py test
         
     - name: Gerar Relatório de Cobertura
