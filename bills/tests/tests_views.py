@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.urls import reverse, NoReverseMatch
+from django.urls import reverse
 from django.contrib.auth.models import User
 from ..models import Bill
 from accounts.models import Profile
@@ -23,16 +23,10 @@ class BillViewsTest(TestCase):
         )
 
     def test_list_view_redirects_if_not_logged_in(self):
+        
         list_url = reverse('bill_list')
-        login_url_name = 'login'
-
-        try:
-            login_url = reverse(login_url_name)
-        except NoReverseMatch:
-            print(
-                f"ok\n"
-            )
-            return
+        
+        login_url = reverse('user-login')
         
         expected_redirect_url = f'{login_url}?next={list_url}'
         response = self.client.get(list_url)

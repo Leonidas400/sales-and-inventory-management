@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from django_extensions.db.fields import AutoSlugField
+from autoslug.fields import AutoSlugField
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from phonenumber_field.modelfields import PhoneNumberField
@@ -73,7 +73,7 @@ class Profile(models.Model):
         """
         try:
             return self.profile_picture.url
-        except AttributeError:
+        except ValueError:
             return ''
 
     def __str__(self):
