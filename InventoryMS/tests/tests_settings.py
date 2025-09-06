@@ -1,3 +1,3 @@
-from ..settings import *
+#from ..settings import *
 
-AUTH_PASSWORD_VALIDATORS = []
+#AUTH_PASSWORD_VALIDATORS = []
