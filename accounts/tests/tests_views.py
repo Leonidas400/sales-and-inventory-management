@@ -44,5 +44,3 @@ class GeneralAccountViewsTest(TestCase):
 
     def test_customer_list_view_loads_for_logged_in_user(self):
         self.client.login(username='teste', password='senha123')
-        #response = self.client.get(reverse('customer_list'))
-        #self
