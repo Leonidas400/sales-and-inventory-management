@@ -7,12 +7,12 @@ class BillModelTest(TestCase):
 
     def test_bill_creation_with_required_fields(self):
         bill = Bill.objects.create(
-            institution_name="Hospital Central",
+            institution_name="Hospital Santo Amaro",
             payment_details="Consulta de rotina",
             amount=250.50
         )
         self.assertIsNotNone(bill.pk)
-        self.assertEqual(bill.institution_name, "Hospital Central")
+        self.assertEqual(bill.institution_name, "Hospital Santo Amaro")
         self.assertEqual(bill.amount, 250.50)
         self.assertFalse(bill.status)
 
@@ -26,7 +26,7 @@ class BillModelTest(TestCase):
 
     def test_autoslug_field_is_populated(self):
         bill = Bill.objects.create(
-            institution_name="Laboratório Vida",
+            institution_name="Laboratório Teste Rapido",
             payment_details="Exames",
             amount=80.00
         )
@@ -35,17 +35,17 @@ class BillModelTest(TestCase):
 
     def test_bill_with_all_fields(self):
         bill = Bill.objects.create(
-            institution_name="Escola Aprender",
-            phone_number=11987654321,
-            email="contato@escola.com",
-            address="Rua do Saber, 123",
+            institution_name="Escola Educar",
+            phone_number=11783656329,
+            email="contato@escolaeducar.com",
+            address="Rua Acre, 27",
             description="Mensalidade de Outubro",
             payment_details="Boleto Bancário",
             amount=550.00,
             status=True
         )
-        self.assertEqual(bill.phone_number, 11987654321)
-        self.assertEqual(bill.email, "contato@escola.com")
+        self.assertEqual(bill.phone_number, 11783656329)
+        self.assertEqual(bill.email, "contato@escolaeducar.com")
         self.assertTrue(bill.status)
 
     def test_required_fields_raise_validation_error(self):

@@ -7,7 +7,7 @@ class BillTableTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Bill.objects.create(
-            institution_name="Hospital Central",
+            institution_name="Hospital Santo Amaro",
             payment_details="Consulta",
             amount=150.00
         )
