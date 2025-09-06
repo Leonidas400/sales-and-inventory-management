@@ -45,9 +45,9 @@ urlpatterns = [
     path('sale/<int:pk>/', SaleDetailView.as_view(), name='sale-detail'),
     path('new-sale/', sale_create_view, name='sale-create'),
     path(
-         'sale/<slug:slug>/delete/', SaleDeleteView.as_view(),
-         name='sale-delete'
-     ),
+        'sale/<int:pk>/delete/', SaleDeleteView.as_view(), 
+        name='sale-delete'
+        ),
 
     # Sales and purchases export
     path('sales/export/', export_sales_to_excel, name='sales-export'),

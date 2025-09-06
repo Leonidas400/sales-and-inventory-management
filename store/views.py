@@ -172,7 +172,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 
     def test_func(self):
-        # item = Item.objects.get(id=pk)
         if self.request.POST.get("quantity") < 1:
             return False
         else:

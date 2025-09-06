@@ -43,6 +43,8 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect('user-login')
+        else:
+            print("ERROS DO FORMULÁRIO DE REGISTRO:", form.errors.as_json())
     else:
         form = CreateUserForm()
 
@@ -104,7 +106,7 @@ class ProfileListView(LoginRequiredMixin, ExportMixin, SingleTableView):
     table_pagination = False
 
 
-class ProfileCreateView(LoginRequiredMixin, CreateView):
+class ProfileCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """
     Create a new profile.
     Requires user to be logged in and have superuser status.
@@ -234,10 +236,8 @@ def is_ajax(request):
 def get_customers(request):
     if is_ajax(request) and request.method == 'POST':
         term = request.POST.get('term', '')
-        customers = Customer.objects.filter(
-            name__icontains=term
-        ).values('id', 'name')
-        customer_list = list(customers)
+        customers = Customer.objects.filter(first_name__icontains=term)
+        customer_list = [customer.to_select2() for customer in customers]
         return JsonResponse(customer_list, safe=False)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
