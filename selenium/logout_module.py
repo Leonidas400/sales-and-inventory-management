@@ -6,7 +6,7 @@ import time
 class LogoutPage:
     def __init__(self, driver):
         self.driver = driver
-    
+
     def find_logout_button_css(self):
         """Encontra o botão de logout por CSS Selector"""
         try:
