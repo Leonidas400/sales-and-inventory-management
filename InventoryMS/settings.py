@@ -117,7 +117,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGIN_URL = 'user-login'
+LOGIN_URL = 'accounts:user-login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_URL = 'logout'
 
