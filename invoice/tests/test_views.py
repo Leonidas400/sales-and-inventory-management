@@ -1,3 +1,4 @@
+import os
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -8,8 +9,13 @@ class InvoiceViewsTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create_user(username='teste', password='senha123')
-        cls.superuser = User.objects.create_superuser(username='superteste', password='senha123')
+        # Dados sensíveis lidos de variáveis de ambiente
+        test_user = os.environ.get('TEST_USER_USERNAME', 'testuser')
+        test_superuser = os.environ.get('TEST_SUPERUSER_USERNAME', 'supertest')
+        test_password = os.environ.get('TEST_USER_PASSWORD', 'defaultpass123')
+
+        cls.user = User.objects.create_user(username=test_user, password=test_password)
+        cls.superuser = User.objects.create_superuser(username=test_superuser, password=test_password)
         
         category = Category.objects.create(name='Categoria Teste')
         cls.item = Item.objects.create(name='Produto Teste', price=10.0, category=category)
@@ -28,7 +34,10 @@ class InvoiceViewsTest(TestCase):
         self.assertRedirects(response, f"{reverse('user-login')}?next={reverse('invoicelist')}")
 
     def test_list_view_is_accessible_by_logged_in_user(self):
-        self.client.login(username='teste', password='senha123')
+        test_user = os.environ.get('TEST_USER_USERNAME', 'testuser')
+        test_password = os.environ.get('TEST_USER_PASSWORD', 'defaultpass123')
+        
+        self.client.login(username=test_user, password=test_password)
         response = self.client.get(reverse('invoicelist'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'invoice/invoicelist.html')
@@ -40,7 +49,10 @@ class InvoiceViewsTest(TestCase):
         self.assertTemplateUsed(response, 'invoice/invoicedetail.html')
 
     def test_create_view_post_creates_invoice(self):
-        self.client.login(username='teste', password='senha123')
+        test_user = os.environ.get('TEST_USER_USERNAME', 'testuser')
+        test_password = os.environ.get('TEST_USER_PASSWORD', 'defaultpass123')
+
+        self.client.login(username=test_user, password=test_password)
         initial_invoice_count = Invoice.objects.count()
         response = self.client.post(reverse('invoice-create'), {
             'customer_name': 'Novo Cliente',
@@ -54,12 +66,18 @@ class InvoiceViewsTest(TestCase):
         self.assertRedirects(response, reverse('invoicelist'))
 
     def test_update_view_permission_denied_for_normal_user(self):
-        self.client.login(username='teste', password='senha123')
+        test_user = os.environ.get('TEST_USER_USERNAME', 'testuser')
+        test_password = os.environ.get('TEST_USER_PASSWORD', 'defaultpass123')
+        
+        self.client.login(username=test_user, password=test_password)
         response = self.client.get(reverse('invoice-update', args=[self.invoice.slug]))
         self.assertEqual(response.status_code, 403)
 
     def test_update_view_post_by_superuser(self):
-        self.client.login(username='superteste', password='senha123')
+        test_superuser = os.environ.get('TEST_SUPERUSER_USERNAME', 'supertest')
+        test_password = os.environ.get('TEST_USER_PASSWORD', 'defaultpass123')
+        
+        self.client.login(username=test_superuser, password=test_password)
         response = self.client.post(reverse('invoice-update', args=[self.invoice.slug]), {
             'customer_name': 'Cliente Atualizado',
             'contact_number': self.invoice.contact_number,
@@ -73,7 +91,10 @@ class InvoiceViewsTest(TestCase):
         self.assertRedirects(response, reverse('invoicelist'))
 
     def test_delete_view_post_by_superuser(self):
-        self.client.login(username='superteste', password='senha123')
+        test_superuser = os.environ.get('TEST_SUPERUSER_USERNAME', 'supertest')
+        test_password = os.environ.get('TEST_USER_PASSWORD', 'defaultpass123')
+        
+        self.client.login(username=test_superuser, password=test_password)
         initial_invoice_count = Invoice.objects.count()
         response = self.client.post(reverse('invoice-delete', args=[self.invoice.pk]))
         self.assertEqual(Invoice.objects.count(), initial_invoice_count - 1)
