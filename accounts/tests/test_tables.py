@@ -1,3 +1,4 @@
+import os
 from django.test import TestCase
 from django.contrib.auth.models import User
 from ..models import Profile
@@ -7,13 +8,21 @@ class ProfileTableTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        user = User.objects.create_user(username='testuser', 
-        password='********',
-        email='teste@teste.com')
+        
+        test_username = os.environ.get('TEST_USER_USERNAME', 'testuser')
+        test_password = os.environ.get('TEST_USER_PASSWORD', 'a-secure-password-123')
+        test_email = os.environ.get('TEST_USER_EMAIL', 'test@example.com')
+        test_phone = os.environ.get('TEST_USER_PHONE', '+5511999998888')
+
+        user = User.objects.create_user(
+            username=test_username, 
+            password=test_password,
+            email=test_email
+        )
         profile = user.profile
         profile.first_name = "Cliente"
         profile.last_name = "Teste"
-        profile.telephone = "+5511729968588"
+        profile.telephone = test_phone
         profile.save()
 
     def test_table_instantiation_and_row_count(self):

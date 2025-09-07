@@ -9,6 +9,8 @@ from .views import (
     BillDeleteView
 )
 
+app_name = 'bills'
+
 # URL patterns
 urlpatterns = [
     # Bill URLs

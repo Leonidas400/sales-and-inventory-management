@@ -12,6 +12,8 @@ from .views import (
     InvoiceDeleteView
 )
 
+app_name = 'invoice'
+
 # URL patterns
 urlpatterns = [
     # Invoice URLs

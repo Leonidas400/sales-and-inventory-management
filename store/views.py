@@ -91,7 +91,7 @@ def dashboard(request):
     }
     return render(request, "store/dashboard.html", context)
 
-PRODUCTS_URL = "/products"
+PRODUCTS_URL = "/products/"
 DELIVERIES_URL = "/deliveries"
 
 class ProductListView(LoginRequiredMixin, ExportMixin, tables.SingleTableView):
@@ -154,7 +154,7 @@ class ProductDetailView(LoginRequiredMixin, FormMixin, DetailView):
         return reverse("product-detail", kwargs={"slug": self.object.slug})
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """
     View class to create a new product.
 
@@ -171,8 +171,21 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     success_url = PRODUCTS_URL
 
 
+    def post(self, request, *args, **kwargs):
+            form = self.get_form()
+            print("--- DADOS RECEBIDOS NO POST ---")
+            print(request.POST)
+            
+            breakpoint() # O TESTE VAI PAUSAR AQUI
+
+            if form.is_valid():
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+
     def test_func(self):
-        if self.request.POST.get("quantity") < 1:
+        quantity = int(self.request.POST.get("quantity", 0))
+        if quantity < 1:
             return False
         else:
             return True

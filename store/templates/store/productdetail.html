@@ -1,3 +1,13 @@
-<div>
-    Product Page
-</div>
+{% extends 'store/base.html' %}
+
+{% block content %}
+  <h1>Product's details</details></h1>
+
+  <h2>{{ object.name }}</h2>
+  <p><strong>Description:</strong> {{ object.description }}</p>
+  <p><strong>Price:</strong> R$ {{ object.price }}</p>
+  <p><strong>Amount in stoq:</strong> {{ object.quantity }}</p>
+  <p><strong>Category:</strong> {{ object.category.name }}</p>
+
+  <a href="{% url 'store:product-list' %}">Return to list</a>
+{% endblock %}
