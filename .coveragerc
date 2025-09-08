@@ -1,0 +1,15 @@
+[run]
+source = .
+omit =
+    */tests/*
+    */migrations/*
+    */selenium/*
+    */static/*
+    manage.py
+    */urls.py
+    */*_test.py
+    */*_tests.py
+    venv/*
+
+[report]
+show_missing = True
