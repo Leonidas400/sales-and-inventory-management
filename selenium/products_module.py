@@ -16,6 +16,7 @@ class Product_Registration:
                 EC.element_to_be_clickable((By.ID, "productsDropdown"))
             )
             products_dropdown.click()
+            time.sleep(1)
             return True
         except:
             print("Não foi possível encontrar o dropdown de products")
@@ -28,6 +29,7 @@ class Product_Registration:
                 EC.element_to_be_clickable((By.LINK_TEXT, "All Products"))
             )
             products_button.click()
+            time.sleep(1)
             return True
         except:
             print("Não foi possível encontrar o botão de 'All products'")
@@ -40,6 +42,7 @@ class Product_Registration:
                 EC.element_to_be_clickable((By.CSS_SELECTOR, ".btn.btn-success.btn-sm.rounded-pill.shadow-sm"))
             )
             add_item_button.click()
+            time.sleep(1)
             return True
         except:
             print("Não foi possível encontrar o botão de 'Add item'")
