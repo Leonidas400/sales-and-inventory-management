@@ -7,7 +7,6 @@ omit =
     */static/*
     Dockerfile
     manage.py
-    */urls.py
     */*_test.py
     */*_tests.py
     venv/*
