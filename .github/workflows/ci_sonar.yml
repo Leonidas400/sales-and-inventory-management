@@ -30,6 +30,9 @@ jobs:
           pip install coverage # Garante que a ferramenta de cobertura está instalada
 
       - name: Executar testes e Gerar Relatório de Cobertura
+        env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+
         run: |
           # 1. Roda os testes monitorando o código
           coverage run manage.py test
