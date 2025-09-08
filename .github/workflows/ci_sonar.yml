@@ -1,57 +1,45 @@
-# Nome do seu fluxo de trabalho.
-name: CI de Django
+# .github/workflows/build-and-test.yml
+
+name: Build, Test and Analyze
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
-  build_and_test:
+  build:
+    name: Build, Test and Analyze
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout do Código
-      uses: actions/checkout@v2
-      with:
-        # A profundidade de fetch é necessária para o SonarScanner.
-        fetch-depth: 0 
-      
-    - name: Configurar Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
-        
-    - name: Instalar Dependências
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install coverage
-        
-    - name: Executar Testes do Django com Cobertura
-      run: coverage run manage.py test
-        
-    - name: Gerar Relatório de Cobertura
-      run: coverage xml
-      
-    # --- Etapas para o SonarQube ---
-    
-    # 1. Instala o SonarScanner
-    - name: Instalar SonarScanner
-      run: |
-        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-        unzip sonar-scanner-cli-5.0.1.3006-linux.zip
-        sudo mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner
-        export PATH=$PATH:/opt/sonar-scanner/bin
-    
-    # 2. Executa o SonarScanner
-    - name: Analisar com SonarQube
-      env:
-        # Pega o token de autenticação das secrets do GitHub.
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        sonar-scanner \
-          -Dsonar.projectKey=seu_projeto_key \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=http://sua.instancia.sonarqube \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-          -Dsonar.python.coverage.reportPaths=coverage.xml
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage # Garante que a ferramenta de cobertura está instalada
+
+      - name: Executar testes e Gerar Relatório de Cobertura
+        run: |
+          # 1. Roda os testes monitorando o código
+          coverage run manage.py test
+          
+          # 2. Gera o relatório no formato XML que o SonarQube entende
+          coverage xml
+
+      - name: Executar Análise do SonarQube
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Fornecido pelo GitHub
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}      # O token que você configurou
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}  # A URL que você configurou
