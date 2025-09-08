@@ -5,6 +5,7 @@ omit =
     */migrations/*
     */selenium/*
     */static/*
+    Dockerfile
     manage.py
     */urls.py
     */*_test.py
